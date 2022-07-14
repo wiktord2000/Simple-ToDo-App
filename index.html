@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 
-
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -21,24 +20,22 @@
     
 </head>
 
-
-<body class="bg-light h-100">
+<body class="sky-gradient-08">
 
     <!-- Header -->
-    <h1 class="card-header text-center mb-4">ToDo APP <i class="fa-solid fa-check-double icon"></i></h1>
+    <h1 class="card-header page-header text-center mb-4">ToDo APP <i class="fa-solid fa-check-double icon"></i></h1>
     <!-- Input section -->
     <div class="container w-35 bg-white border rounded shadow mb-3">
         <!-- Input and label -->
         <div class="m-4 d-flex justify-content-center" >
-            <input type="text" class="form-control w-75 mr-2" id="task-input" placeholder="Wprowadz zadanie..." name="task" onkeyup="checkEnter(event)">
-            <button id="btn" type="submit" class="btn btn-success w-25" onclick="addTask()">Dodaj</button>
+            <input type="text" class="form-control w-75 me-2" id="task-input" placeholder="Wprowadz zadanie..." name="task" onkeyup="checkEnter(event)">
+            <button id="add-button" type="submit" class="btn btn-success w-25" onclick="addTask()">Dodaj</button>
         </div>
     </div>
 
     <!-- List of tasks section -->
     <div id= "tasks-list" class="container w-35 bg-white border rounded shadow mb-4 p-4 "></div>
     
-
     <!-- My JavaScript -->
     <script src="script.js"></script>
     <script>loadTasks()</script>
