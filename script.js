@@ -12,7 +12,7 @@ const toggleCard = (id) => {
             if(task.isFinished){
                 let date = new Date();
                 document.getElementById(id).style = "border-left-color: lightgrey; filter: brightness(96%);";
-                document.getElementById(id).firstElementChild.style = "text-decoration: line-through;";
+                document.getElementById(id).firstElementChild.firstElementChild.style = "text-decoration: line-through;";
                 let child = document.createElement('div');
                 let dateString = date.toLocaleTimeString().slice(0, 5) + " "+ date.toLocaleDateString();
                 child.innerHTML = dateString;
@@ -22,7 +22,7 @@ const toggleCard = (id) => {
             }
             else{
                 document.getElementById(id).style = "border-left-color: lightskyblue; filter: none";
-                document.getElementById(id).firstElementChild.style = "text-decoration: none;";
+                document.getElementById(id).firstElementChild.firstElementChild.style = "text-decoration: none;";
                 document.getElementById(id).removeChild(document.getElementById(id).lastElementChild);
             }
             localStorage.setItem("tasks", JSON.stringify(tasks));
