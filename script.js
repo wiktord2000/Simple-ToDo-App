@@ -43,14 +43,12 @@ const loadTasks = () =>{
 
         if( task.isFinished == true){
             listOfTasks.innerHTML += 
-            `<div id="${task.id}" class="card mb-3 finish-card d-flex shadow-sm" onclick="toggleCard(id)">
+            `<div id="${task.id}" class="card mb-3 finish-card d-flex justify-content-center shadow-sm" onclick="toggleCard(id)">
                 <div class="card-body d-flex justify-content-between mr-2"> 
                     <div style="text-decoration: line-through;">
                         ${task.name}
                     </div>
-                    <div >
-                        <i class="fa-solid fa-x text-danger align-self-center delete-icon" onclick="deleteTask(${task.id})"></i>
-                    </div>
+                    <i class="fa-solid fa-x align-self-center text-danger delete-icon" onclick="deleteTask(${task.id})"></i>
                 </div>
                 <div class="card-footer text-center p-0">${task.date}</div>
             </div>`;
@@ -58,14 +56,12 @@ const loadTasks = () =>{
         }
         else{
             listOfTasks.innerHTML += 
-                `<div id="${task.id}" class="card mb-3 waiting-card d-flex shadow-sm" onclick="toggleCard(id)">
+                `<div id="${task.id}" class="card mb-3 waiting-card d-flex justify-content-center shadow-sm" onclick="toggleCard(id)">
                     <div class="card-body d-flex justify-content-between mr-2"> 
                         <div style="text-decoration: none;">
                             ${task.name}
                         </div>
-                        <div >
-                            <i class="fa-solid fa-x text-danger align-self-center delete-icon" onclick="deleteTask(${task.id})"></i>
-                        </div>
+                        <i class="fa-solid fa-x text-danger align-self-center delete-icon" onclick="deleteTask(${task.id})"></i>
                     </div>
                 </div>`;
         }
