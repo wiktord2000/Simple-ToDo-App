@@ -1,0 +1,35 @@
+
+
+.w-35{
+    width: 35%;
+}
+
+html{
+    height: 100%;
+}
+
+.icon{
+    color: #28a745;
+}
+
+h1{
+    font-family: 'Nunito', sans-serif;
+}
+
+.finish-card{
+    border-left-color: lightgrey;
+    border-left-width: 6px;
+    filter: brightness(96%);
+    cursor: pointer;
+}
+
+.waiting-card{
+    border-left-color: lightskyblue;
+    border-left-width: 6px;
+    cursor: pointer;
+}
+
+.delete-icon:hover{
+    font-size: 1.125rem;
+}
+
