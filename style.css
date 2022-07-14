@@ -7,8 +7,9 @@ h1{
     font-family: 'Nunito', sans-serif;
 }
 
-.w-35{
-    width: 35%;
+.content-wrapper{
+    max-width: 600px;
+    width: 100%;
 }
 
 .icon {
@@ -30,20 +31,24 @@ h1{
 }
 
 .finish-card{
-    border-left-color: lightgrey;
-    border-left-width: 6px;
+    border: 0px;
+    border-left: 6px solid lightgrey;
     filter: brightness(96%);
     cursor: pointer;
 }
 
 .waiting-card{
-    border-left-color: lightskyblue;
-    border-left-width: 6px;
+    border: 0px;
+    border-left: 6px solid lightskyblue;
     cursor: pointer;
 }
 
 .delete-icon:hover{
     font-size: 1.125rem;
+}
+
+#tasks-list{
+    width: auto;
 }
 
 /* Gradients */

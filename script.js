@@ -15,7 +15,8 @@ const toggleCard = (id) => {
                 document.getElementById(id).firstElementChild.firstElementChild.style = "text-decoration: line-through;";
                 let child = document.createElement('div');
                 let dateString = date.toLocaleTimeString().slice(0, 5) + " "+ date.toLocaleDateString();
-                child.innerHTML = dateString;
+                child.innerHTML = `<i style="color: #15ac66;" class="fa-solid fa-check"></i>
+                                    <span style="color: #15ac66;">Ukończone (${dateString})</span>`;
                 child.classList.add("card-footer", "text-center", "p-0");
                 document.getElementById(id).appendChild(child);
                 task.date = dateString;
@@ -44,20 +45,23 @@ const loadTasks = () =>{
         if( task.isFinished == true){
             listOfTasks.innerHTML += 
             `<div id="${task.id}" class="card mb-3 finish-card d-flex justify-content-center shadow-sm" onclick="toggleCard(id)">
-                <div class="card-body d-flex justify-content-between mr-2"> 
+                <div class="card-body d-flex justify-content-between m-2"> 
                     <div style="text-decoration: line-through;">
                         ${task.name}
                     </div>
                     <i class="fa-solid fa-x align-self-center text-danger delete-icon" onclick="deleteTask(${task.id})"></i>
                 </div>
-                <div class="card-footer text-center p-0">${task.date}</div>
+                <div class="card-footer text-center p-0">
+                    <i style="color: #15ac66;" class="fa-solid fa-check"></i>
+                    <span style="color: #15ac66;">Ukończone (${task.date})</span>
+                </div>
             </div>`;
                 
         }
         else{
             listOfTasks.innerHTML += 
                 `<div id="${task.id}" class="card mb-3 waiting-card d-flex justify-content-center shadow-sm" onclick="toggleCard(id)">
-                    <div class="card-body d-flex justify-content-between mr-2"> 
+                    <div class="card-body d-flex justify-content-between m-2"> 
                         <div style="text-decoration: none;">
                             ${task.name}
                         </div>
