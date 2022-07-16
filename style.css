@@ -3,6 +3,13 @@ html, body{
     height: 100%;
 }
 
+body {
+    /* Make better gradient displaying */
+    margin: 0;
+    background-repeat: no-repeat !important;
+    background-attachment: fixed !important;
+}
+
 h1{
     font-family: 'Nunito', sans-serif;
 }
@@ -49,6 +56,51 @@ h1{
 
 #tasks-list{
     width: auto;
+}
+
+
+/* Waves styling */
+#waves{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    width: 200%;
+    height: 45vh;
+    overflow: hidden;
+}
+
+.wave{
+    animation: move infinite cubic-bezier(.54,.22,.41,.47);
+} 
+
+.wave-0{
+    animation-delay: -2s;
+    animation-duration: 7s;
+}
+.wave-1{
+    animation-delay: -3s;
+    animation-duration: 10s;
+}
+.wave-2{
+    animation-delay: -4s;
+    animation-duration: 13s;
+}
+.wave-3{
+    animation-delay: -5s;
+    animation-duration: 17s;
+}
+
+@keyframes move {
+    0%{
+        transform: translateX(0);
+    }
+    50%{
+        transform: translateX(-50%);
+    }
+    100%{
+        transform: translateX(0);
+    }
 }
 
 /* Gradients */
