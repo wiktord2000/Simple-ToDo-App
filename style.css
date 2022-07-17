@@ -37,13 +37,16 @@ h1{
     font-weight: 600;
 }
 
+/* Finished task styling */
 .finish-card{
     border: 0px;
-    border-left: 6px solid lightgrey;
-    filter: brightness(96%);
+    border-left: 6px solid #87cefa70;
     cursor: pointer;
+    opacity: 0.6;
+    backdrop-filter: blur(10px);
 }
 
+/* Not finished task styling */
 .waiting-card{
     border: 0px;
     border-left: 6px solid lightskyblue;

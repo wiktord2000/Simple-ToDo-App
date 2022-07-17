@@ -11,18 +11,20 @@ const toggleCard = (id) => {
             task.isFinished = !task.isFinished;
             if(task.isFinished){
                 let date = new Date();
-                document.getElementById(id).style = "border-left-color: lightgrey; filter: brightness(96%);";
+                document.getElementById(id).classList.remove("waiting-card");
+                document.getElementById(id).classList.add("finish-card");
                 document.getElementById(id).firstElementChild.firstElementChild.style = "text-decoration: line-through;";
                 let child = document.createElement('div');
                 let dateString = date.toLocaleTimeString().slice(0, 5) + " "+ date.toLocaleDateString();
-                child.innerHTML = `<i style="color: #15ac66;" class="fa-solid fa-check"></i>
-                                    <span style="color: #15ac66;">Ukończone (${dateString})</span>`;
+                child.innerHTML = `<i style="color: #22a224;" class="fa-solid fa-check"></i>
+                                    <span style="color: #22a224;">Ukończone (${dateString})</span>`;
                 child.classList.add("card-footer", "text-center", "p-0");
                 document.getElementById(id).appendChild(child);
                 task.date = dateString;
             }
             else{
-                document.getElementById(id).style = "border-left-color: lightskyblue; filter: none";
+                document.getElementById(id).classList.remove("finish-card");
+                document.getElementById(id).classList.add("waiting-card");
                 document.getElementById(id).firstElementChild.firstElementChild.style = "text-decoration: none;";
                 document.getElementById(id).removeChild(document.getElementById(id).lastElementChild);
             }
@@ -52,8 +54,8 @@ const loadTasks = () =>{
                     <i class="fa-solid fa-x align-self-center text-danger delete-icon" onclick="deleteTask(${task.id})"></i>
                 </div>
                 <div class="card-footer text-center p-0">
-                    <i style="color: #15ac66;" class="fa-solid fa-check"></i>
-                    <span style="color: #15ac66;">Ukończone (${task.date})</span>
+                    <i style="color: #22a224;" class="fa-solid fa-check"></i>
+                    <span style="color: #22a224;">Ukończone (${task.date})</span>
                 </div>
             </div>`;
                 
