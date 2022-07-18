@@ -4,12 +4,13 @@ let tasks = [];
 let listOfTasks = document.getElementById("tasks-list");
 
 class Task{
-    constructor(id, name, isFinished, steps, date){
+    constructor(id, name, isFinished, steps, date, finishedSteps){
         this.id = id;
         this.name = name;
         this.isFinished = isFinished;
         this.steps = steps;
         this.date = date;
+        this.finishedSteps = finishedSteps;
     }
 }
 
@@ -67,16 +68,14 @@ const getCardHTML = (task) => {
                 <div class="buttons-wrapper">
                     ${
                         task.isFinished?
-                        `<i class="fa-solid fa-rotate-right text-secondary" onclick=""></i>`
-                        :
-                        `<i class="fa-solid fa-arrow-up text-success" onclick=""></i>
-                        <i class="fa-solid fa-arrow-down text-secondary" onclick=""></i>` 
+                        `<i class="fa-solid fa-rotate-right text-secondary mx-1 bg-ripple" onclick=""></i>`
+                        : ``
                     }
-                    <i class="fa-solid fa-x align-self-center text-danger delete-icon" onclick="deleteTask(${task.id})"></i>
+                    <i class="fa-solid fa-x align-self-center text-danger delete-icon mx-1 bg-ripple" onclick="deleteTask(${task.id})"></i>
                 </div>
             </div>
 
-            <div class="progress-bar d-flex gap-1 flex-row">
+            <div class="progress-bar d-flex justify-content-center align-items-center gap-1 flex-row">
                 ${(() => {
                     let stepsHTML = "";
                     for(let i = 0 ; i < task.steps ; i++){
@@ -84,10 +83,12 @@ const getCardHTML = (task) => {
                     }
                     return stepsHTML;
                 })()}
+                <i class="fa-solid fa-angle-down text-secondary px-1 ${task.isFinished? "" : "bg-ripple"} " onclick=""></i>
+                <i class="fa-solid fa-angle-up text-success px-1 ${task.isFinished? "" : "bg-ripple"}" onclick=""></i>
             </div>
 
             ${task.isFinished? 
-                `<div class="card-footer text-center success-color p-0">
+                `<div class="card-footer border-0 finish-message text-center success-color p-0">
                     <i class="fa-solid fa-check"></i>
                     <span>Ukończone (${task.date})</span>
                 </div>` : ``}
@@ -111,7 +112,7 @@ const addTask = () => {
         }
 
         // Add task
-        tasks.push(new Task(taskId, taskName, false, 1, null));
+        tasks.push(new Task(taskId, taskName, false, 4, 2, null));
         // Store in localStorage - assign extended array to the "tasks" key 
         localStorage.setItem("tasks", JSON.stringify(tasks));
         // Display tasks
