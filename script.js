@@ -4,13 +4,13 @@ let tasks = [];
 let listOfTasks = document.getElementById("tasks-list");
 
 class Task{
-    constructor(id, name, isFinished, steps, date, finishedSteps){
+    constructor(id, name, isFinished, steps, finishedSteps, date){
         this.id = id;
         this.name = name;
         this.isFinished = isFinished;
         this.steps = steps;
-        this.date = date;
         this.finishedSteps = finishedSteps;
+        this.date = date;
     }
 }
 
@@ -59,7 +59,7 @@ const loadTasks = () =>{
 const getCardHTML = (task) => {
 
     return (
-        `<div id="${task.id}" class="card ${task.isFinished? "finish-card" : "waiting-card"} d-flex justify-content-center shadow-sm mb-3" onclick="toggleCard(id)">
+        `<div id="${task.id}" class="card ${task.isFinished? "finish-card" : "waiting-card"} d-flex justify-content-center shadow-sm mb-3">
 
             <div class="card-body d-flex justify-content-between m-2"> 
                 <div>
@@ -68,7 +68,7 @@ const getCardHTML = (task) => {
                 <div class="buttons-wrapper">
                     ${
                         task.isFinished?
-                        `<i class="fa-solid fa-rotate-right text-secondary mx-1 bg-ripple" onclick=""></i>`
+                        `<i class="fa-solid fa-rotate-right text-secondary mx-1 bg-ripple" onclick="onRestartTask(${task.id})"></i>`
                         : ``
                     }
                     <i class="fa-solid fa-x align-self-center text-danger delete-icon mx-1 bg-ripple" onclick="deleteTask(${task.id})"></i>
@@ -79,12 +79,19 @@ const getCardHTML = (task) => {
                 ${(() => {
                     let stepsHTML = "";
                     for(let i = 0 ; i < task.steps ; i++){
-                        stepsHTML += `<div class="step"></div>`
+                        if(task.finishedSteps < i + 1){
+                            // Empty step
+                            stepsHTML += `<div style="opacity: 0.4" class="step"></div>`
+                        }
+                        else{
+                            // Filled step
+                            stepsHTML += `<div class="step"></div>`
+                        }
                     }
                     return stepsHTML;
                 })()}
-                <i class="fa-solid fa-angle-down text-secondary px-1 ${task.isFinished? "" : "bg-ripple"} " onclick=""></i>
-                <i class="fa-solid fa-angle-up text-success px-1 ${task.isFinished? "" : "bg-ripple"}" onclick=""></i>
+                <i class="fa-solid fa-angle-down text-secondary px-1 ${task.isFinished? "" : "bg-ripple"}" onclick="onStepDown(${task.id})"></i>
+                <i class="fa-solid fa-angle-up text-success px-1 ${task.isFinished? "" : "bg-ripple"}" onclick="onStepUp(${task.id})"></i>
             </div>
 
             ${task.isFinished? 
@@ -95,6 +102,64 @@ const getCardHTML = (task) => {
 
         </div>`
     )
+}
+
+const onStepUp = (taskId) => {
+
+    
+    for(let task of tasks){
+        if(task.id === taskId){
+
+            // When total full
+            if(task.finishedSteps ===  task.steps) return;
+            // Increase 
+            if(task.finishedSteps < task.steps){
+
+                task.finishedSteps += 1;
+                if(task.finishedSteps ===  task.steps){
+                    toggleCard(task.id);
+                }
+            }
+
+        }
+        // Rerender card
+        document.getElementById(task.id).outerHTML = getCardHTML(task);
+    }
+    updateTasksInStorage();
+}
+
+const onStepDown = (taskId) => {
+    for(let task of tasks){
+
+        // When total empty or full (if full - task finished)
+        if((task.finishedSteps === 0) || (task.finishedSteps === task.steps)) return;
+        // Decrement
+        if(task.id === taskId){
+            
+            if(task.finishedSteps > 0){
+                task.finishedSteps -= 1;
+            }
+        }
+        // Rerender card
+        document.getElementById(task.id).outerHTML = getCardHTML(task);
+    }
+    updateTasksInStorage();
+}
+
+const onRestartTask = (taskId) => {
+    for(let task of tasks){
+
+        if(task.id === taskId){
+            
+            // Restart task
+            task.finishedSteps = 0;
+            task.date = null;
+            task.isFinished = false;
+        }
+        // Rerender card
+        document.getElementById(task.id).outerHTML = getCardHTML(task);
+    }
+    updateTasksInStorage();
 }
 
 const addTask = () => {
@@ -112,7 +177,7 @@ const addTask = () => {
         }
 
         // Add task
-        tasks.push(new Task(taskId, taskName, false, 4, 2, null));
+        tasks.push(new Task(taskId, taskName, false, 4, 0, null));
         // Store in localStorage - assign extended array to the "tasks" key 
         localStorage.setItem("tasks", JSON.stringify(tasks));
         // Display tasks
@@ -137,6 +202,9 @@ const deleteTask = (id) =>{
     loadTasks();
 }
 
+const updateTasksInStorage = () => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+}
 
 const clearTasks = () => {
     tasks = [];

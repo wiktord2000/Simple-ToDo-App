@@ -41,7 +41,7 @@ h1{
 .finish-card{
     border: 0px;
     border-left: 6px solid #87cefa70;
-    cursor: pointer;
+    /* cursor: pointer; */
     opacity: 0.6;
     backdrop-filter: blur(10px);
 }
@@ -50,7 +50,7 @@ h1{
 .waiting-card{
     border: 0px;
     border-left: 6px solid lightskyblue;
-    cursor: pointer;
+    /* cursor: pointer; */
 }
 
 #tasks-list{
