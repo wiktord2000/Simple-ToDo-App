@@ -25,20 +25,37 @@
     <!-- Header -->
     <h1 class="card-header page-header text-center mb-4">ToDo APP <i class="fa-solid fa-check-double icon"></i></h1>
 
+    <!-- Main content -->
     <div class="content-wrapper container">
+
         <!-- Input section -->
         <div class="border bg-white rounded shadow mb-3">
+
             <!-- Input and label -->
             <div class="m-4 d-flex justify-content-center" >
                 <input type="text" class="form-control w-75 me-2" id="task-input" placeholder="Wprowadz zadanie..." name="task" onkeyup="checkEnter(event)">
                 <button id="add-button" type="submit" class="btn btn-success w-25" onclick="addTask()">Dodaj</button>
             </div>
+
+            <!-- More -->
+            <div id="more" class="text-center p-1 bg-light border-top"><i class="fa-solid fa-circle-chevron-down text-secondary"></i></div>
         </div>
 
-        <!-- List of tasks section -->
+        <!-- List of tasks -->
         <div id="tasks-list"></div>
     </div>
     
+
+
+
+
+
+
+
+
+
+
+
     <!-- Waves -->
     <svg id="waves" viewBox="0 0 1440 600" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
         <!-- First wave -->

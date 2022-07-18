@@ -3,31 +3,37 @@
 let tasks = [];
 let listOfTasks = document.getElementById("tasks-list");
 
+class Task{
+    constructor(id, name, isFinished, steps, date){
+        this.id = id;
+        this.name = name;
+        this.isFinished = isFinished;
+        this.steps = steps;
+        this.date = date;
+    }
+}
+
 const toggleCard = (id) => {
 
     tasks.forEach((task) => {
 
         if(task.id == id){
+            // Toggle state
             task.isFinished = !task.isFinished;
+
             if(task.isFinished){
+                // Prepare date
                 let date = new Date();
-                document.getElementById(id).classList.remove("waiting-card");
-                document.getElementById(id).classList.add("finish-card");
-                document.getElementById(id).firstElementChild.firstElementChild.style = "text-decoration: line-through;";
-                let child = document.createElement('div');
-                let dateString = date.toLocaleTimeString().slice(0, 5) + " "+ date.toLocaleDateString();
-                child.innerHTML = `<i style="color: #22a224;" class="fa-solid fa-check"></i>
-                                    <span style="color: #22a224;">Ukończone (${dateString})</span>`;
-                child.classList.add("card-footer", "text-center", "p-0");
-                document.getElementById(id).appendChild(child);
+                let dateString = date.toLocaleTimeString().slice(0, 5) + " " + date.toLocaleDateString();
+                // Update
                 task.date = dateString;
             }
             else{
-                document.getElementById(id).classList.remove("finish-card");
-                document.getElementById(id).classList.add("waiting-card");
-                document.getElementById(id).firstElementChild.firstElementChild.style = "text-decoration: none;";
-                document.getElementById(id).removeChild(document.getElementById(id).lastElementChild);
+                task.date = null;
             }
+            // Change state of the card
+            document.getElementById(id).outerHTML = getCardHTML(task);
+            // Update the task in localStorage
             localStorage.setItem("tasks", JSON.stringify(tasks));
         }
     })
@@ -42,38 +48,53 @@ const loadTasks = () =>{
     
     listOfTasks.innerHTML = "";
     if(tasks == null) return;
-    for (let task of tasks ){
 
-        if( task.isFinished == true){
-            listOfTasks.innerHTML += 
-            `<div id="${task.id}" class="card mb-3 finish-card d-flex justify-content-center shadow-sm" onclick="toggleCard(id)">
-                <div class="card-body d-flex justify-content-between m-2"> 
-                    <div style="text-decoration: line-through;">
-                        ${task.name}
-                    </div>
-                    <i class="fa-solid fa-x align-self-center text-danger delete-icon" onclick="deleteTask(${task.id})"></i>
-                </div>
-                <div class="card-footer text-center p-0">
-                    <i style="color: #22a224;" class="fa-solid fa-check"></i>
-                    <span style="color: #22a224;">Ukończone (${task.date})</span>
-                </div>
-            </div>`;
-                
-        }
-        else{
-            listOfTasks.innerHTML += 
-                `<div id="${task.id}" class="card mb-3 waiting-card d-flex justify-content-center shadow-sm" onclick="toggleCard(id)">
-                    <div class="card-body d-flex justify-content-between m-2"> 
-                        <div style="text-decoration: none;">
-                            ${task.name}
-                        </div>
-                        <i class="fa-solid fa-x text-danger align-self-center delete-icon" onclick="deleteTask(${task.id})"></i>
-                    </div>
-                </div>`;
-        }
+    for (let task of tasks ){
+        // Render every card
+        listOfTasks.innerHTML += getCardHTML(task);
     }
 }
 
+const getCardHTML = (task) => {
+
+    return (
+        `<div id="${task.id}" class="card ${task.isFinished? "finish-card" : "waiting-card"} d-flex justify-content-center shadow-sm mb-3" onclick="toggleCard(id)">
+
+            <div class="card-body d-flex justify-content-between m-2"> 
+                <div>
+                    ${task.name}
+                </div>
+                <div class="buttons-wrapper">
+                    ${
+                        task.isFinished?
+                        `<i class="fa-solid fa-rotate-right text-secondary" onclick=""></i>`
+                        :
+                        `<i class="fa-solid fa-arrow-up text-success" onclick=""></i>
+                        <i class="fa-solid fa-arrow-down text-secondary" onclick=""></i>` 
+                    }
+                    <i class="fa-solid fa-x align-self-center text-danger delete-icon" onclick="deleteTask(${task.id})"></i>
+                </div>
+            </div>
+
+            <div class="progress-bar d-flex gap-1 flex-row">
+                ${(() => {
+                    let stepsHTML = "";
+                    for(let i = 0 ; i < task.steps ; i++){
+                        stepsHTML += `<div class="step"></div>`
+                    }
+                    return stepsHTML;
+                })()}
+            </div>
+
+            ${task.isFinished? 
+                `<div class="card-footer text-center success-color p-0">
+                    <i class="fa-solid fa-check"></i>
+                    <span>Ukończone (${task.date})</span>
+                </div>` : ``}
+
+        </div>`
+    )
+}
 
 const addTask = () => {
     // Find html element
@@ -81,16 +102,21 @@ const addTask = () => {
 
     if(taskName != ""){
         // Add new task to the array
-        let taskId = 0;
+        let taskId;
         if(tasks.length != 0){
             taskId = tasks[tasks.length - 1].id + 1; 
-        } 
-        tasks.push({id: taskId, name: taskName, isFinished: false, date: null});
+        }
+        else{
+            taskId = 0;
+        }
+
+        // Add task
+        tasks.push(new Task(taskId, taskName, false, 1, null));
         // Store in localStorage - assign extended array to the "tasks" key 
         localStorage.setItem("tasks", JSON.stringify(tasks));
         // Display tasks
         loadTasks();
-
+        //Erase input
         document.getElementById('task-input').value = "";
 
     }

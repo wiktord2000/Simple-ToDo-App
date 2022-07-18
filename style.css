@@ -61,6 +61,32 @@ h1{
     width: auto;
 }
 
+.card{
+    overflow-wrap: anywhere;
+}
+
+
+.step{
+    flex: 1;
+    background-color: #82ed9a;
+    height: 6px;
+    border-radius: 2px;
+}
+
+.progress-bar{
+    padding: 0.25rem 0.25rem;
+    background-color: rgba(0,0,0,.06);
+}
+
+#more:hover{
+    background-color: #d8e5f27f !important;
+    cursor: pointer;
+}
+
+.success-color{
+    color: #22a224
+}
+
 
 /* Waves styling */
 #waves{
