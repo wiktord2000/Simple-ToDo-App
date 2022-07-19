@@ -30,14 +30,17 @@ const loadDataFromStorage = () =>{
     // IsMoreOpen check
     isMoreOpen = getFromLocalStorage("isMoreOpen");
     if(isMoreOpen === null) isMoreOpen = false;
-    
+    displayMore(isMoreOpen);
 }
 
 // Render HTML basing on initial data
 const renderData = () =>{
 
-    if((tasks === null) || (tasks.length === 0)) return;
+    if(tasks.length === 0) return;
     renderTasks();
+    if(isMoreOpen){
+        displayMore(true);
+    }
 }
 
 const renderTasks = () => {
@@ -125,9 +128,42 @@ const getCardHTML = (task) => {
     )
 }
 
-// const onMoreClick = () => {
-//     document.getElementById("more-content").style.height = "100px";
-// }
+const displayMore = (isMore) => {
+
+    let moreContentRef = document.getElementById("more-content");
+    let iconRef = document.getElementById("more-icon");
+    let moreStrapRef = document.getElementById("more");
+
+    if(isMore){
+        // Display additional content
+        moreContentRef.hidden = false;
+        // Change icon
+        iconRef.classList.remove("fa-circle-chevron-down");
+        iconRef.classList.add("fa-circle-chevron-up");
+        // Change event
+        moreStrapRef.onclick = onLessClick;
+
+    }
+    else{
+        // Hide additional content
+        moreContentRef.hidden = true;
+        // Change icon
+        iconRef.classList.remove("fa-circle-chevron-up");
+        iconRef.classList.add("fa-circle-chevron-down");
+        // Change event
+        moreStrapRef.onclick = onMoreClick;
+    }
+    isMoreOpen = isMore;
+    updateIsMoreOpenInStorage();
+}
+
+const onMoreClick = () => {
+    displayMore(true);
+}
+
+const onLessClick = () => {
+    displayMore(false);
+}
 
 const onStepUp = (taskId) => {
 
@@ -238,6 +274,10 @@ const deleteTask = (id) =>{
 
 const updateTasksInStorage = () => {
     setInLocalStorage("tasks", tasks);
+}
+
+const updateIsMoreOpenInStorage = () => {
+    setInLocalStorage("isMoreOpen", isMoreOpen);
 }
 
 const setInLocalStorage = (key, value) => {

@@ -38,10 +38,12 @@
             </div>
 
             <!-- More content -->
-            <div id="more-content"></div>
+            <div id="more-content">
+                <button id="add-button" type="submit" class="btn btn-success w-25" onclick="addTask()">Dodaj</button>
+            </div>
 
             <!-- More -->
-            <div id="more" onclick="onMoreClick()" class="text-center p-1 bg-light border-top"><i class="fa-solid fa-circle-chevron-down text-secondary"></i></div>
+            <div id="more" onclick="onMoreClick()" class="text-center p-1 bg-light border-top"><i id="more-icon" class="fa-solid fa-circle-chevron-down text-secondary"></i></div>
         </div>
 
         <!-- List of tasks -->
