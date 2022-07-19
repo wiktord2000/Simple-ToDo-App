@@ -131,11 +131,13 @@ const getCardHTML = (task) => {
 const displayMore = (isMore) => {
 
     let moreContentRef = document.getElementById("more-content");
+    console.log(moreContentRef);
     let iconRef = document.getElementById("more-icon");
     let moreStrapRef = document.getElementById("more");
 
     if(isMore){
         // Display additional content
+        moreContentRef.classList.add("d-flex");
         moreContentRef.hidden = false;
         // Change icon
         iconRef.classList.remove("fa-circle-chevron-down");
@@ -146,7 +148,10 @@ const displayMore = (isMore) => {
     }
     else{
         // Hide additional content
+         // d-flex has "display: flex !important" so we have to remove this to make it "display: none"
+        moreContentRef.classList.remove("d-flex");
         moreContentRef.hidden = true;
+        moreContentRef.style.backgroundColor = "rgba(255,255,255, 0.6)";
         // Change icon
         iconRef.classList.remove("fa-circle-chevron-up");
         iconRef.classList.add("fa-circle-chevron-down");
