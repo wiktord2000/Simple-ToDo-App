@@ -131,7 +131,6 @@ const getCardHTML = (task) => {
 const displayMore = (isMore) => {
 
     let moreContentRef = document.getElementById("more-content");
-    console.log(moreContentRef);
     let iconRef = document.getElementById("more-icon");
     let moreStrapRef = document.getElementById("more");
 
@@ -151,12 +150,13 @@ const displayMore = (isMore) => {
          // d-flex has "display: flex !important" so we have to remove this to make it "display: none"
         moreContentRef.classList.remove("d-flex");
         moreContentRef.hidden = true;
-        moreContentRef.style.backgroundColor = "rgba(255,255,255, 0.6)";
         // Change icon
         iconRef.classList.remove("fa-circle-chevron-up");
         iconRef.classList.add("fa-circle-chevron-down");
         // Change event
         moreStrapRef.onclick = onMoreClick;
+        // Set up number of steps to 1
+        document.getElementById('stepsInput').value = 1;
     }
     isMoreOpen = isMore;
     updateIsMoreOpenInStorage();
@@ -176,21 +176,22 @@ const onStepUp = (taskId) => {
         if(task.id === taskId){
 
             // When total full
-            if(task.finishedSteps ===  task.steps) return;
+            if(task.finishedSteps === task.steps) return;
             // Increase 
             if(task.finishedSteps < task.steps){
 
                 task.finishedSteps += 1;
-                if(task.finishedSteps ===  task.steps){
+                if(task.finishedSteps === task.steps){
                     toggleCard(task.id);
+                    return;
                 }
             }
-
+            // Rerender card
+            document.getElementById(task.id).outerHTML = getCardHTML(task);
+            updateTasksInStorage();
+            return; 
         }
-        // Rerender card
-        document.getElementById(task.id).outerHTML = getCardHTML(task);
     }
-    updateTasksInStorage();
 }
 
 const onStepDown = (taskId) => {
@@ -232,6 +233,7 @@ const onRestartTask = (taskId) => {
 const addTask = () => {
     // Find html element
     let taskName = document.getElementById('task-input').value;
+    let numberOfSteps = parseInt(document.getElementById('stepsInput').value);
 
     if(taskName != ""){
 
@@ -245,7 +247,7 @@ const addTask = () => {
         }
 
         // Add task
-        let newTask = new Task(taskId, taskName, false, 4, 0, null);
+        let newTask = new Task(taskId, taskName, false, numberOfSteps, 0, null);
         tasks.push(newTask);
 
         // Store in LocalStorage
@@ -255,8 +257,9 @@ const addTask = () => {
         let listOfTasks = document.getElementById("tasks-list");
         listOfTasks.innerHTML += getCardHTML(newTask);
 
-        //Erase input
+        //Erase inputs
         document.getElementById('task-input').value = "";
+        document.getElementById('stepsInput').value = 1;
     }
 }
 
