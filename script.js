@@ -1,7 +1,7 @@
 "use strict"
 
 let tasks = [];
-let listOfTasks = document.getElementById("tasks-list");
+let isMoreOpen = false;
 
 class Task{
     constructor(id, name, isFinished, steps, finishedSteps, date){
@@ -11,6 +11,43 @@ class Task{
         this.steps = steps;
         this.finishedSteps = finishedSteps;
         this.date = date;
+    }
+}
+
+
+const loadApp = () => {
+    loadDataFromStorage();
+    renderData();
+}
+
+// Load existing date from LocalStorage
+const loadDataFromStorage = () =>{
+
+    // Tasks check
+    tasks = getFromLocalStorage("tasks");
+    if(tasks === null) tasks = [];
+
+    // IsMoreOpen check
+    isMoreOpen = getFromLocalStorage("isMoreOpen");
+    if(isMoreOpen === null) isMoreOpen = false;
+    
+}
+
+// Render HTML basing on initial data
+const renderData = () =>{
+
+    if((tasks === null) || (tasks.length === 0)) return;
+    renderTasks();
+}
+
+const renderTasks = () => {
+    // Render tasks
+    let listOfTasks = document.getElementById("tasks-list");
+    listOfTasks.innerHTML = "";
+
+    for (let task of tasks ){
+        // Render every card
+        listOfTasks.innerHTML += getCardHTML(task);
     }
 }
 
@@ -35,25 +72,9 @@ const toggleCard = (id) => {
             // Change state of the card
             document.getElementById(id).outerHTML = getCardHTML(task);
             // Update the task in localStorage
-            localStorage.setItem("tasks", JSON.stringify(tasks));
+            updateTasksInStorage();
         }
     })
-}
-
-const loadTasks = () =>{
-    // Check the localStorage has data
-    if(localStorage.getItem('tasks') != null){
-        // Fill array with tasks
-        tasks = JSON.parse(localStorage.getItem('tasks'));
-    }
-    
-    listOfTasks.innerHTML = "";
-    if(tasks == null) return;
-
-    for (let task of tasks ){
-        // Render every card
-        listOfTasks.innerHTML += getCardHTML(task);
-    }
 }
 
 const getCardHTML = (task) => {
@@ -104,9 +125,12 @@ const getCardHTML = (task) => {
     )
 }
 
+// const onMoreClick = () => {
+//     document.getElementById("more-content").style.height = "100px";
+// }
+
 const onStepUp = (taskId) => {
 
-    
     for(let task of tasks){
         if(task.id === taskId){
 
@@ -129,6 +153,7 @@ const onStepUp = (taskId) => {
 }
 
 const onStepDown = (taskId) => {
+
     for(let task of tasks){
 
         // When total empty or full (if full - task finished)
@@ -147,6 +172,7 @@ const onStepDown = (taskId) => {
 }
 
 const onRestartTask = (taskId) => {
+
     for(let task of tasks){
 
         if(task.id === taskId){
@@ -167,9 +193,10 @@ const addTask = () => {
     let taskName = document.getElementById('task-input').value;
 
     if(taskName != ""){
+
         // Add new task to the array
         let taskId;
-        if(tasks.length != 0){
+        if((tasks.length !== 0) && (tasks !== null)){
             taskId = tasks[tasks.length - 1].id + 1; 
         }
         else{
@@ -177,20 +204,28 @@ const addTask = () => {
         }
 
         // Add task
-        tasks.push(new Task(taskId, taskName, false, 4, 0, null));
-        // Store in localStorage - assign extended array to the "tasks" key 
-        localStorage.setItem("tasks", JSON.stringify(tasks));
-        // Display tasks
-        loadTasks();
+        let newTask = new Task(taskId, taskName, false, 4, 0, null);
+        tasks.push(newTask);
+
+        // Store in LocalStorage
+        updateTasksInStorage();
+
+        // Rerender new task at the end of list
+        let listOfTasks = document.getElementById("tasks-list");
+        listOfTasks.innerHTML += getCardHTML(newTask);
+
         //Erase input
         document.getElementById('task-input').value = "";
-
     }
 }
 
 const deleteTask = (id) =>{
+    
     tasks = tasks.filter((task) =>{
         if(task.id == id){
+            // Delete html element
+            let deletingTask = document.getElementById(task.id);
+            deletingTask.outerHTML = "";
             return false;
         }
         else{
@@ -198,12 +233,25 @@ const deleteTask = (id) =>{
         }
     });
 
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-    loadTasks();
+    updateTasksInStorage();
 }
 
 const updateTasksInStorage = () => {
-    localStorage.setItem("tasks", JSON.stringify(tasks));
+    setInLocalStorage("tasks", tasks);
+}
+
+const setInLocalStorage = (key, value) => {
+    localStorage.setItem(key, JSON.stringify(value));
+}
+
+const getFromLocalStorage = (key) => {
+
+    // If exist
+    if(localStorage.getItem(key) !== null){
+        return JSON.parse(localStorage.getItem(key));
+    }
+
+    return null; 
 }
 
 const clearTasks = () => {
@@ -211,7 +259,6 @@ const clearTasks = () => {
     localStorage.clear();
     loadTasks();
 }
-
 
 // Add task using enter key
 const checkEnter = (event) =>{

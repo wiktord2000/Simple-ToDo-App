@@ -37,21 +37,17 @@
                 <button id="add-button" type="submit" class="btn btn-success w-25" onclick="addTask()">Dodaj</button>
             </div>
 
+            <!-- More content -->
+            <div id="more-content"></div>
+
             <!-- More -->
-            <div id="more" class="text-center p-1 bg-light border-top"><i class="fa-solid fa-circle-chevron-down text-secondary"></i></div>
+            <div id="more" onclick="onMoreClick()" class="text-center p-1 bg-light border-top"><i class="fa-solid fa-circle-chevron-down text-secondary"></i></div>
         </div>
 
         <!-- List of tasks -->
         <div id="tasks-list"></div>
     </div>
     
-
-
-
-
-
-
-
 
 
 
@@ -114,7 +110,7 @@
 
     <!-- My JavaScript -->
     <script src="script.js"></script>
-    <script>loadTasks()</script>
+    <script>loadApp()</script>
 
 </body>
 </html> 
