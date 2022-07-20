@@ -43,6 +43,7 @@ h1{
     border-left: 6px solid #87cefa70;
     /* cursor: pointer; */
     opacity: 0.6;
+    /* background-color: rgba(255, 255, 255, 0.6); */
     backdrop-filter: blur(10px);
 }
 
@@ -66,6 +67,10 @@ h1{
     background-color: #82ed9a;
     height: 6px;
     border-radius: 2px;
+}
+
+#stepsInput{
+    flex: 0 1 80px;
 }
 
 .progress-bar{

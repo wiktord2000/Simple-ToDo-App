@@ -89,16 +89,15 @@ const getCardHTML = (task) => {
                 <div>
                     ${task.name}
                 </div>
-                <div class="buttons-wrapper">
+                <div id="buttons-wrapper" class="d-flex ms-3">
                     ${
                         task.isFinished?
-                        `<i class="fa-solid fa-rotate-right text-secondary mx-1 bg-ripple" onclick="onRestartTask(${task.id})"></i>`
+                        `<i class="fa-solid fa-rotate-right align-self-center text-secondary mx-1 bg-ripple" onclick="onRestartTask(${task.id})"></i>`
                         : ``
                     }
                     <i class="fa-solid fa-x align-self-center text-danger delete-icon mx-1 bg-ripple" onclick="deleteTask(${task.id})"></i>
                 </div>
             </div>
-
             <div class="progress-bar d-flex justify-content-center align-items-center gap-1 flex-row">
                 ${(() => {
                     let stepsHTML = "";
