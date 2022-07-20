@@ -195,13 +195,14 @@ const onStepUp = (taskId) => {
 
 const onStepDown = (taskId) => {
 
+    
     for(let task of tasks){
-
-        // When total empty or full (if full - task finished)
-        if((task.finishedSteps === 0) || (task.finishedSteps === task.steps)) return;
+        
         // Decrement
         if(task.id === taskId){
-            
+            // When total empty or full (if full - task finished)
+            if((task.finishedSteps === 0) || (task.finishedSteps === task.steps)) return;
+
             if(task.finishedSteps > 0){
                 task.finishedSteps -= 1;
             }
