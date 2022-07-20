@@ -120,7 +120,7 @@ const getCardHTML = (task) => {
             ${task.isFinished? 
                 `<div class="card-footer border-0 finish-message text-center success-color p-0">
                     <i class="fa-solid fa-check"></i>
-                    <span>Ukończone (${task.date})</span>
+                    <span>Completed (${task.date})</span>
                 </div>` : ``}
 
         </div>`
