@@ -16,12 +16,12 @@ h1{
 
 /* Flying birds convas adjust*/
 .vanta-canvas{
-    position: absolute !important;
+    position: fixed !important;
     z-index: -1 !important;
     top: 0px;
     left: 0px;
     width: 100% !important;
-    height: 100% !important;
+    height: 100vh !important;
 }
 
 .content-wrapper{
