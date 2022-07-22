@@ -195,7 +195,6 @@ const onStepUp = (taskId) => {
 
 const onStepDown = (taskId) => {
 
-    
     for(let task of tasks){
         
         // Decrement
