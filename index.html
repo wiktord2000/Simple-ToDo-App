@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html id="birds-animation">
 
 <head>
     <!-- Required meta tags -->
@@ -20,6 +20,27 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@1,500&display=swap" rel="stylesheet"> 
+    <!-- Birds -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.birds.min.js"></script>
+    <script>
+        VANTA.BIRDS({
+        el: "#birds-animation",
+        mouseControls: false,
+        touchControls: false,
+        gyroControls: false,
+        minHeight: 200.00,
+        minWidth: 200.00,
+        scale: 1.00,
+        scaleMobile: 1.00,
+        colorMode: "varianceGradient",
+        birdSize: 1.20,
+        quantity: 3.00,
+        backgroundAlpha: 0.00,
+        separation: 40.00,
+        speedLimit: 3.00,
+        })
+    </script>
    
     
 </head>
