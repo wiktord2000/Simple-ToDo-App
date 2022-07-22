@@ -13,4 +13,5 @@ This is the simple TODO app created without any UI frameworks. It uses only Boot
  - [ ] Possibility  to describe every step of task (e.g. tooltip when hover progress bar) 
  - [ ] Possibility  to plan every day of week
  - [ ] Add flying birds at background (Vanta.js)
+ - [ ] Drag and Drop tasks
 
