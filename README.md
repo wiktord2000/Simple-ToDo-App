@@ -15,3 +15,4 @@ This is the simple TODO app created without any UI frameworks. It uses only Boot
  - [ ] Possibility  to plan every day of week
  - [x] Add flying birds at background (Vanta.js)
  - [ ] Drag and Drop tasks
+ - [ ] Edit created tasks
